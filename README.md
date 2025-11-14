@@ -1,0 +1,2 @@
+# spawned-snipers-message
+
