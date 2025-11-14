@@ -29,9 +29,9 @@ function Notifier:announce()
     self._last_announce_t = t
     local text
     if self._alive <= 1 then
-        text = "Снайпер появился"
+        text = "SNIPER INCOMING!"
     else
-        text = "Снайперы появились"
+        text = "SNIPERS INCOMING!"
     end
     send_sniper_message(text)
 end
