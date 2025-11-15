@@ -65,11 +65,11 @@ function SSN:scan()
 end
 
 if RequiredScript == "lib/setups/gamesetup" then
-    Hooks:PostHook(GameSetup, "init_game", "SniperSpawnNotifier_ResetOnInitGame", function()
+    Hooks:PostHook(GameSetup, "init_game", "GameSetupInitGameReset", function()
         SSN:reset()
     end)
 
-    Hooks:PostHook(GameSetup, "update", "SniperSpawnNotifier_Update", function()
+    Hooks:PostHook(GameSetup, "update", "GameSetupUpdateScan", function()
         SSN:scan()
     end)
 end
