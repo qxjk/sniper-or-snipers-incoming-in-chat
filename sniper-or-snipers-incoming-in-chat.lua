@@ -5,7 +5,7 @@ local function msg(text)
     if managers.chat then
         managers.chat:_receive_message(1, "WARNING", text, Color.red)
     elseif managers.hud then
-        managers.hud:show_hint({text = text})
+        managers.hud:show_hint({ text = text })
     end
 end
 
@@ -20,6 +20,20 @@ function SSN:announce()
     if t < self.last_announce + self.delay then return end
     self.last_announce = t
     msg(self.alive <= 1 and "SNIPER INCOMING!" or "SNIPERS INCOMING!")
+end
+
+local function is_sniper(base)
+    if base.has_tag and base:has_tag("sniper") then
+        return true
+    end
+    local tt = base._tweak_table
+    if tt then
+        tt = tostring(tt)
+        if tt:lower():find("sniper", 1, true) then
+            return true
+        end
+    end
+    return false
 end
 
 local function reg(unit)
@@ -39,7 +53,7 @@ if RequiredScript == "lib/units/enemies/cop/copbase" then
     Hooks:PostHook(CopBase, "post_init", "SniperSpawnNotifier_CopBasePostInit", function(self)
         local s = game_state_machine and game_state_machine:current_state_name()
         if not s or not s:find("ingame") then return end
-        if self.has_tag and self:has_tag("sniper") and alive(self._unit) then
+        if alive(self._unit) and is_sniper(self) then
             reg(self._unit)
         end
     end)
